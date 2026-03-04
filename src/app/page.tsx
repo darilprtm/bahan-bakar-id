@@ -277,10 +277,10 @@ export default function Home() {
         </p>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 xl:gap-10 relative z-10 w-full mb-10">
+      <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 relative z-10 w-full mb-10 max-w-full">
 
         {/* LEFT PANEL : DASHBOARD CONTROLS */}
-        <div className="w-full lg:w-5/12 xl:w-1/3 flex flex-col gap-6 flex-shrink-0">
+        <div className="w-full lg:w-[45%] xl:w-1/3 flex flex-col gap-6 lg:overflow-y-auto lg:pr-2 lg:pb-4 scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-transparent">
 
           {errorMsg && (
             <div className="p-4 bg-red-50 text-red-600 rounded-2xl flex items-start gap-3 border border-red-200 shadow-sm">
@@ -476,11 +476,10 @@ export default function Home() {
             {isCalculating ? <RefreshCw className="w-5 h-5 animate-spin relative z-10" /> : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 relative z-10"><path d="m5 12 7-7 7 7" /><path d="M12 19V5" /></svg>}
             <span className="relative z-10">{isCalculating ? "MEMPROSES DATA..." : "ENGINE START"}</span>
           </button>
-
         </div>
 
         {/* RIGHT PANEL - HASIL & MAP */}
-        <div className="w-full lg:w-7/12 xl:w-2/3 flex flex-col gap-6 min-h-[500px] lg:min-h-[800px]">
+        <div className="w-full lg:w-[55%] xl:w-2/3 flex flex-col gap-6 lg:min-h-[800px]">
 
           <AnimatePresence>
             {result && (
@@ -529,7 +528,7 @@ export default function Home() {
             )}
           </AnimatePresence>
 
-          <div className="flex-grow w-full rounded-3xl overflow-hidden dashboard-panel relative min-h-[400px] lg:h-full lg:min-h-0 flex-1 shadow-sm border border-slate-200 bg-slate-50">
+          <div className="flex-grow w-full rounded-3xl overflow-hidden dashboard-panel relative h-[450px] lg:h-full lg:min-h-0 min-h-[450px] shadow-sm border border-slate-200 bg-slate-50">
             {isLoaded ? (
               <MapDisplay points={waypoints} routeCoordinates={routeCoordinates} />
             ) : (
