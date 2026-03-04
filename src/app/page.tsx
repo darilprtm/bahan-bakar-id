@@ -303,9 +303,10 @@ export default function Home() {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}
+                    style={{ zIndex: 100 - idx }} // FIX: Baris atas layernya lebih tinggi agar dropdown tidak tertimpa baris bawahnya
                     className="relative"
                   >
-                    <div className="flex gap-4 relative z-10 w-full">
+                    <div className="flex gap-4 relative w-full">
 
                       {/* Timeline Node */}
                       <div className="flex flex-col items-center mt-3 z-20 w-8 flex-shrink-0 relative">
