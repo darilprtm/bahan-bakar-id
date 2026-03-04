@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import dynamic from "next/dynamic";
+import { useJsApiLoader } from "@react-google-maps/api";
 import { Search, MapPin, Plus, Trash2, Fuel, Car, Navigation, AlertCircle, RefreshCw, Crosshair, ArrowUpDown, ChevronDown, Activity, DollarSign, Clock } from "lucide-react";
 import vehiclesData from "@/data/vehicles.json";
 import fuelsData from "@/data/fuels.json";
@@ -20,7 +21,32 @@ interface Waypoint {
   searchResults: any[];
 }
 
+const libraries: ("places" | "geometry")[] = ["places", "geometry"];
+
+function getApiUsageKey() {
+  const d = new Date();
+  return `bb_google_api_usage_${d.getFullYear()}_${d.getMonth() + 1}`;
+}
+const MAX_API_QUOTA = 10000;
+
 export default function Home() {
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
+    libraries,
+  });
+
+  const checkAndIncrementQuota = useCallback((count: number = 1) => {
+    if (typeof window === "undefined") return true;
+    const key = getApiUsageKey();
+    const current = parseInt(localStorage.getItem(key) || "0", 10);
+    if (current + count > MAX_API_QUOTA) {
+      return false;
+    }
+    localStorage.setItem(key, (current + count).toString());
+    return true;
+  }, []);
+
   const [waypoints, setWaypoints] = useState<Waypoint[]>([
     { id: "wp-origin", query: "", label: "", lat: null, lon: null, isSearching: false, searchResults: [] },
     { id: "wp-dest", query: "", label: "", lat: null, lon: null, isSearching: false, searchResults: [] }
@@ -66,35 +92,38 @@ export default function Home() {
     setRouteCoordinates([]);
   };
 
+  const searchTimers = useRef<{ [key: string]: NodeJS.Timeout }>({});
+
   const useCurrentLocation = (idx: number) => {
     if (!navigator.geolocation) {
       setErrorMsg("Geolokasi tidak didukung oleh browser Anda.");
       return;
     }
+    if (!isLoaded) return;
 
     setIsLocating(true);
     navigator.geolocation.getCurrentPosition(
-      async (position) => {
+      (position) => {
         const { latitude, longitude } = position.coords;
-        try {
-          const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
-          const data = await res.json();
+        if (!checkAndIncrementQuota(1)) { setIsLocating(false); setErrorMsg(`Batas API Bulanan Tercapai (${MAX_API_QUOTA} request). Silakan coba lagi bulan depan.`); return; }
 
-          const newWaypoints = [...waypoints];
-          newWaypoints[idx].query = data.display_name || "Lokasi Anda Saat Ini";
-          newWaypoints[idx].label = data.display_name || "Lokasi Anda Saat Ini";
-          newWaypoints[idx].lat = latitude;
-          newWaypoints[idx].lon = longitude;
-          newWaypoints[idx].searchResults = [];
-          setWaypoints(newWaypoints);
-
-          setResult(null);
-          setRouteCoordinates([]);
-        } catch (err) {
-          setErrorMsg("Gagal mendapatkan nama jalan dari koordinat Anda.");
-        } finally {
+        const geocoder = new window.google.maps.Geocoder();
+        geocoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
           setIsLocating(false);
-        }
+          if (status === "OK" && results && results[0]) {
+            const newWaypoints = [...waypoints];
+            newWaypoints[idx].query = results[0].formatted_address;
+            newWaypoints[idx].label = results[0].formatted_address;
+            newWaypoints[idx].lat = latitude;
+            newWaypoints[idx].lon = longitude;
+            newWaypoints[idx].searchResults = [];
+            setWaypoints(newWaypoints);
+            setResult(null);
+            setRouteCoordinates([]);
+          } else {
+            setErrorMsg("Gagal mendapatkan nama jalan dari koordinat Anda.");
+          }
+        });
       },
       () => {
         setIsLocating(false);
@@ -103,51 +132,69 @@ export default function Home() {
     );
   };
 
-  const handleSearch = async (idx: number, query: string) => {
-    const newWaypoints = [...waypoints];
-    newWaypoints[idx].query = query;
-    newWaypoints[idx].label = query;
-    newWaypoints[idx].lat = null;
-    newWaypoints[idx].lon = null;
-    setWaypoints(newWaypoints);
+  const handleSearch = (idx: number, query: string) => {
+    setWaypoints(prev => {
+      const updated = [...prev];
+      updated[idx] = { ...updated[idx], query, label: query, lat: null, lon: null, searchResults: [] };
+      return updated;
+    });
 
-    if (query.length < 3) {
-      newWaypoints[idx].searchResults = [];
-      setWaypoints([...newWaypoints]);
-      return;
-    }
+    if (searchTimers.current[idx]) clearTimeout(searchTimers.current[idx]);
+    if (query.length < 3 || !isLoaded) return;
 
-    newWaypoints[idx].isSearching = true;
-    setWaypoints([...newWaypoints]);
+    searchTimers.current[idx] = setTimeout(() => {
+      if (!checkAndIncrementQuota(1)) { setErrorMsg(`Batas API Bulanan Tercapai (${MAX_API_QUOTA} request). Silakan coba lagi bulan depan.`); return; }
 
-    try {
-      const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=id&limit=5`);
-      const data = await res.json();
-      const updatedWp = [...waypoints];
-      updatedWp[idx].searchResults = data;
-      updatedWp[idx].isSearching = false;
-      setWaypoints(updatedWp);
-    } catch (err) {
-      const updatedWp = [...waypoints];
-      updatedWp[idx].isSearching = false;
-      setWaypoints(updatedWp);
-    }
+      setWaypoints(prev => {
+        const updated = [...prev];
+        updated[idx] = { ...updated[idx], isSearching: true };
+        return updated;
+      });
+
+      const service = new window.google.maps.places.AutocompleteService();
+      service.getPlacePredictions({ input: query, componentRestrictions: { country: "id" } }, (predictions, status) => {
+        const results = (predictions || []).map((p: any) => ({
+          place_id: p.place_id,
+          display_name: p.description
+        }));
+        setWaypoints(prev => {
+          const updated = [...prev];
+          updated[idx] = { ...updated[idx], searchResults: results, isSearching: false };
+          return updated;
+        });
+      });
+    }, 400);
   };
 
   const selectLocation = (wpIdx: number, resultItem: any) => {
-    const newWaypoints = [...waypoints];
-    newWaypoints[wpIdx].query = resultItem.display_name;
-    newWaypoints[wpIdx].label = resultItem.display_name;
-    newWaypoints[wpIdx].lat = parseFloat(resultItem.lat);
-    newWaypoints[wpIdx].lon = parseFloat(resultItem.lon);
-    newWaypoints[wpIdx].searchResults = [];
-    setWaypoints(newWaypoints);
-    setResult(null);
-    setRouteCoordinates([]);
+    if (!isLoaded || !resultItem.place_id) return;
+    if (!checkAndIncrementQuota(1)) { setErrorMsg(`Batas API Bulanan Tercapai (${MAX_API_QUOTA} request). Silakan coba lagi bulan depan.`); return; }
+
+    const geocoder = new window.google.maps.Geocoder();
+    geocoder.geocode({ placeId: resultItem.place_id }, (results, status) => {
+      if (status === "OK" && results && results[0]) {
+        const loc = results[0].geometry.location;
+        setWaypoints(prev => {
+          const updated = [...prev];
+          updated[wpIdx] = {
+            ...updated[wpIdx],
+            query: resultItem.display_name,
+            label: resultItem.display_name,
+            lat: loc.lat(),
+            lon: loc.lng(),
+            searchResults: [],
+          };
+          return updated;
+        });
+        setResult(null);
+        setRouteCoordinates([]);
+      }
+    });
   };
 
   const calculateRoute = async () => {
     setErrorMsg("");
+    if (!isLoaded) return;
 
     const currentFuelPrice = parseFloat(customPrice) || 0;
     const currentVehicleData = selectedVehicle === "custom"
@@ -168,35 +215,50 @@ export default function Home() {
       return;
     }
 
+    if (!checkAndIncrementQuota(1)) { setErrorMsg(`Batas API Bulanan Tercapai (${MAX_API_QUOTA} request). Silakan coba lagi bulan depan.`); return; }
+
     setIsCalculating(true);
 
-    try {
-      const coordString = validPoints.map(p => `${p.lon},${p.lat}`).join(";");
-      const osrmUrl = `https://router.project-osrm.org/route/v1/driving/${coordString}?overview=full&geometries=geojson`;
+    const origin = new window.google.maps.LatLng(validPoints[0].lat!, validPoints[0].lon!);
+    const destination = new window.google.maps.LatLng(validPoints[validPoints.length - 1].lat!, validPoints[validPoints.length - 1].lon!);
+    const waypts = validPoints.slice(1, -1).map(p => ({
+      location: new window.google.maps.LatLng(p.lat!, p.lon!),
+      stopover: true
+    }));
 
-      const res = await fetch(osrmUrl);
-      const data = await res.json();
-
-      if (data.code !== "Ok") throw new Error(data.message || "Gagal mengambil rute aktual jalan tol/jalan umum.");
-
-      const route = data.routes[0];
-      const distanceKm = route.distance / 1000;
-      const durationMins = Math.round(route.duration / 60);
-
-      const kml = currentVehicleData.kml;
-      const fuelNeededLiter = distanceKm / kml;
-      const totalCost = fuelNeededLiter * currentFuelPrice;
-
-      setResult({ distanceKm, durationMins, fuelNeededLiter, totalCost });
-
-      const coords = route.geometry.coordinates.map((c: any[]) => [c[1], c[0]]);
-      setRouteCoordinates(coords);
-
-    } catch (err: any) {
-      setErrorMsg("Titik tujuan mungkin dipisahkan lautan. Rute OSRM gagal.");
-    } finally {
+    const directionsService = new window.google.maps.DirectionsService();
+    directionsService.route({
+      origin,
+      destination,
+      waypoints: waypts,
+      travelMode: window.google.maps.TravelMode.DRIVING,
+    }, (result, status) => {
       setIsCalculating(false);
-    }
+      if (status === "OK" && result) {
+        const route = result.routes[0];
+        let totalDistanceMeters = 0;
+        let totalDurationSeconds = 0;
+
+        route.legs.forEach(leg => {
+          totalDistanceMeters += leg.distance?.value || 0;
+          totalDurationSeconds += leg.duration?.value || 0;
+        });
+
+        const distanceKm = totalDistanceMeters / 1000;
+        const durationMins = Math.round(totalDurationSeconds / 60);
+
+        const kml = currentVehicleData.kml;
+        const fuelNeededLiter = distanceKm / kml;
+        const totalCost = fuelNeededLiter * currentFuelPrice;
+
+        setResult({ distanceKm, durationMins, fuelNeededLiter, totalCost });
+
+        const coords = route.overview_path.map(p => [p.lat(), p.lng()]);
+        setRouteCoordinates(coords);
+      } else {
+        setErrorMsg("Rute tidak ditemukan atau titik tujuan terpisahkan lautan / tidak bisa diakses via darat.");
+      }
+    });
   };
 
   return (
@@ -254,6 +316,7 @@ export default function Home() {
                       {/* Swap Button */}
                       {idx < waypoints.length - 1 && (
                         <button
+                          suppressHydrationWarning
                           onClick={() => swapWaypoints(idx, idx + 1)}
                           className="absolute -left-[9px] top-[calc(100%-12px)] z-30 bg-[#0B0F19] border border-slate-700 shadow-xl text-slate-400 hover:text-orange-500 hover:border-orange-500/50 p-1.5 rounded-full transition-all hover:scale-110"
                           title="Tukar Posisi"
@@ -269,6 +332,7 @@ export default function Home() {
                           </label>
                           {idx === 0 && (
                             <button
+                              suppressHydrationWarning
                               onClick={() => useCurrentLocation(idx)}
                               disabled={isLocating}
                               className="text-[10px] font-bold text-orange-400 hover:text-orange-300 flex items-center gap-1.5 bg-orange-500/10 hover:bg-orange-500/20 px-2.5 py-1 rounded border border-orange-500/20 transition-colors uppercase tracking-wider"
@@ -397,6 +461,7 @@ export default function Home() {
           </div>
 
           <button
+            suppressHydrationWarning
             onClick={calculateRoute}
             disabled={isCalculating}
             className="w-full mt-2 relative group overflow-hidden bg-gradient-to-r from-orange-600 via-red-500 to-orange-600 text-white font-black text-lg py-5 rounded-2xl shadow-[0_0_30px_rgba(249,115,22,0.3)] transition-all flex items-center justify-center gap-3 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed border border-white/10 uppercase tracking-widest"
@@ -462,7 +527,14 @@ export default function Home() {
           <div className="flex-grow w-full rounded-3xl overflow-hidden dashboard-panel border border-slate-700/50 relative min-h-[350px] lg:min-h-0 bg-[#0f172a]">
             {/* Overlay Grid di atas peta (hanya pointer event none) */}
             <div className="absolute inset-0 z-20 pointer-events-none border-[12px] border-[#131B2B] rounded-3xl opacity-50 mix-blend-overlay"></div>
-            <MapDisplay points={waypoints} routeCoordinates={routeCoordinates} />
+            {isLoaded ? (
+              <MapDisplay points={waypoints} routeCoordinates={routeCoordinates} />
+            ) : (
+              <div className="w-full h-full flex flex-col items-center justify-center text-slate-500 gap-3">
+                <RefreshCw className="w-6 h-6 animate-spin text-orange-500/50" />
+                <span className="text-sm font-semibold tracking-widest uppercase">Menghubungkan Satelit...</span>
+              </div>
+            )}
           </div>
 
         </div>
