@@ -264,15 +264,15 @@ export default function Home() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative">
 
-      {/* Glow Effects Behind UI */}
-      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-orange-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+      {/* Subtle Glow Effects for Light Theme */}
+      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-red-100 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-orange-100 rounded-full blur-[100px] pointer-events-none"></div>
 
       <div className="text-center mb-12 relative z-10">
-        <h1 className="text-4xl md:text-6xl font-outfit font-black text-white tracking-tight mb-4 drop-shadow-lg">
-          Kalkulasi Navigasi <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-600">Presisi</span>.
+        <h1 className="text-4xl md:text-6xl font-outfit font-black text-slate-900 tracking-tight mb-4 drop-shadow-sm">
+          Kalkulasi Navigasi <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-600">Presisi</span>.
         </h1>
-        <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto font-medium">
+        <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto font-medium">
           Dashboard pintar untuk memproyeksikan jarak, durasi waktu, dan beban biaya bahan bakar kendaraan Anda tanpa meleset.
         </p>
       </div>
@@ -280,10 +280,10 @@ export default function Home() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-auto lg:h-[760px] relative z-10 block">
 
         {/* LEFT PANEL : DASHBOARD CONTROLS */}
-        <div className="lg:col-span-5 flex flex-col gap-6 overflow-y-auto pr-2 pb-4 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
+        <div className="lg:col-span-5 flex flex-col gap-6 overflow-y-auto pr-2 pb-4 scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-transparent">
 
           {errorMsg && (
-            <div className="p-4 bg-red-950/50 text-red-400 rounded-2xl flex items-start gap-3 border border-red-500/20 shadow-lg">
+            <div className="p-4 bg-red-50 text-red-600 rounded-2xl flex items-start gap-3 border border-red-200 shadow-sm">
               <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
               <p className="text-sm font-medium leading-relaxed">{errorMsg}</p>
             </div>
@@ -291,7 +291,7 @@ export default function Home() {
 
           {/* Navigasi Control */}
           <div className="dashboard-panel p-6">
-            <h2 className="text-sm font-black font-outfit text-slate-400 uppercase tracking-[0.2em] mb-5 flex items-center gap-2">
+            <h2 className="text-sm font-black font-outfit text-slate-800 uppercase tracking-[0.2em] mb-5 flex items-center gap-2">
               <Crosshair className="text-orange-500 w-4 h-4" /> Radar Waypoint
             </h2>
 
@@ -305,29 +305,31 @@ export default function Home() {
                     exit={{ opacity: 0, height: 0 }}
                     className="relative"
                   >
-                    <div className="flex gap-4 relative z-10">
+                    <div className="flex gap-4 relative z-10 w-full">
 
                       {/* Timeline Node */}
-                      <div className="flex flex-col items-center mt-3 z-20">
-                        <div className={`w-4 h-4 rounded-full border-4 shadow-[0_0_15px_rgba(0,0,0,0.5)] ${idx === 0 ? 'border-orange-500 bg-orange-950 shadow-orange-500/50' : idx === waypoints.length - 1 ? 'border-red-500 bg-red-950 shadow-red-500/50' : 'border-slate-500 bg-slate-900'}`}></div>
-                        {idx < waypoints.length - 1 && <div className="w-[2px] h-full bg-slate-700 my-1"></div>}
+                      <div className="flex flex-col items-center mt-3 z-20 w-8 flex-shrink-0 relative">
+                        <div className={`w-4 h-4 rounded-full border-4 shadow-sm relative z-10 ${idx === 0 ? 'border-orange-500 bg-white' : idx === waypoints.length - 1 ? 'border-red-500 bg-white' : 'border-slate-400 bg-white'}`}></div>
+                        {idx < waypoints.length - 1 && <div className="absolute top-4 bottom-[-32px] w-[2px] bg-slate-200 z-0"></div>}
+
+                        {/* Swap Button moved cleanly to center of timeline */}
+                        {idx < waypoints.length - 1 && (
+                          <div className="absolute top-[calc(100%+16px)] z-30">
+                            <button
+                              suppressHydrationWarning
+                              onClick={() => swapWaypoints(idx, idx + 1)}
+                              className="bg-white border border-slate-200 shadow-sm text-slate-500 hover:text-orange-500 hover:border-orange-500/50 p-1.5 rounded-full transition-all hover:scale-110 flex items-center justify-center bg-clip-padding"
+                              title="Tukar Posisi"
+                            >
+                              <ArrowUpDown className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                        )}
                       </div>
 
-                      {/* Swap Button */}
-                      {idx < waypoints.length - 1 && (
-                        <button
-                          suppressHydrationWarning
-                          onClick={() => swapWaypoints(idx, idx + 1)}
-                          className="absolute -left-[9px] top-[calc(100%-12px)] z-30 bg-[#0B0F19] border border-slate-700 shadow-xl text-slate-400 hover:text-orange-500 hover:border-orange-500/50 p-1.5 rounded-full transition-all hover:scale-110"
-                          title="Tukar Posisi"
-                        >
-                          <ArrowUpDown className="w-3.5 h-3.5" />
-                        </button>
-                      )}
-
-                      <div className="flex-grow w-full">
+                      <div className="flex-grow w-full pb-2">
                         <div className="flex justify-between items-center mb-1.5">
-                          <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                          <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest pl-1">
                             {idx === 0 ? "Keberangkatan" : idx === waypoints.length - 1 ? "Destinasi Akhir" : `Check-point ${idx}`}
                           </label>
                           {idx === 0 && (
@@ -335,7 +337,7 @@ export default function Home() {
                               suppressHydrationWarning
                               onClick={() => useCurrentLocation(idx)}
                               disabled={isLocating}
-                              className="text-[10px] font-bold text-orange-400 hover:text-orange-300 flex items-center gap-1.5 bg-orange-500/10 hover:bg-orange-500/20 px-2.5 py-1 rounded border border-orange-500/20 transition-colors uppercase tracking-wider"
+                              className="text-[10px] font-bold text-orange-600 hover:text-orange-500 flex items-center gap-1.5 bg-orange-50 hover:bg-orange-100 px-2.5 py-1 rounded border border-orange-200 transition-colors uppercase tracking-wider"
                             >
                               {isLocating ? <RefreshCw className="w-3 h-3 animate-spin" /> : <MapPin className="w-3 h-3" />}
                               GPS Scan
@@ -348,29 +350,29 @@ export default function Home() {
                             type="text"
                             value={wp.query}
                             onChange={(e) => handleSearch(idx, e.target.value)}
-                            placeholder={idx === 0 ? "Radar lokasi awal..." : "Radar destinasi..."}
-                            className={`w-full pl-11 pr-11 py-3.5 bg-[#0B0F19] shadow-inner border rounded-xl text-sm transition-all text-white placeholder:text-slate-600 ${wp.lat && wp.lon ? 'border-orange-500/50 ring-1 ring-orange-500/20 bg-orange-950/10' : 'border-slate-800 focus:border-orange-500 focus:ring-1 focus:ring-orange-500'}`}
+                            placeholder={idx === 0 ? "Ketik lokasi awal..." : "Ketik destinasi..."}
+                            className={`w-full pl-11 pr-11 py-3.5 bg-slate-50 shadow-inner border rounded-xl text-sm transition-all text-slate-900 placeholder:text-slate-400 ${wp.lat && wp.lon ? 'border-orange-300 ring-1 ring-orange-100 bg-orange-50/30' : 'border-slate-200 focus:border-orange-400 focus:ring-1 focus:ring-orange-400'}`}
                           />
-                          <Search className={`w-4 h-4 absolute left-4 top-4 ${wp.isSearching ? 'animate-pulse text-orange-500' : 'text-slate-500'}`} />
+                          <Search className={`w-4 h-4 absolute left-4 top-4 ${wp.isSearching ? 'animate-pulse text-orange-500' : 'text-slate-400'}`} />
 
                           {waypoints.length > 2 && idx > 0 && (
-                            <button onClick={() => removeWaypoint(wp.id)} className="absolute right-3 top-3 bg-slate-800/50 p-1 rounded-md text-slate-400 hover:bg-red-500/20 hover:text-red-400 transition-colors">
+                            <button onClick={() => removeWaypoint(wp.id)} className="absolute right-3 top-3 bg-slate-200 p-1 rounded-md text-slate-500 hover:bg-red-100 hover:text-red-500 transition-colors">
                               <Trash2 className="w-4 h-4" />
                             </button>
                           )}
                         </div>
 
-                        {/* Search Results Dropdown - Dark Theme */}
+                        {/* Search Results Dropdown - Light Theme */}
                         {wp.searchResults && wp.searchResults.length > 0 && (
-                          <div className="absolute z-50 mt-2 w-[calc(100%-28px)] bg-[#1e293b] border border-slate-700 shadow-2xl rounded-xl max-h-60 overflow-y-auto overflow-hidden text-slate-200">
+                          <div className="absolute z-50 mt-2 w-full max-w-[calc(100%-16px)] bg-white border border-slate-200 shadow-xl rounded-xl max-h-60 overflow-y-auto overflow-hidden text-slate-700">
                             {wp.searchResults.map((res: any, i: number) => (
                               <div
                                 key={i}
                                 onClick={() => selectLocation(idx, res)}
-                                className="px-4 py-3 border-b border-slate-700/50 last:border-0 cursor-pointer text-xs md:text-sm hover:bg-slate-700/50 transition-colors flex items-start gap-2"
+                                className="px-4 py-3 border-b border-slate-100 last:border-0 cursor-pointer text-xs md:text-sm hover:bg-slate-50 transition-colors flex items-start gap-3"
                               >
                                 <MapPin className="w-4 h-4 text-orange-500 mt-0.5 flex-shrink-0" />
-                                <span>{res.display_name}</span>
+                                <span className="font-medium">{res.display_name}</span>
                               </div>
                             ))}
                           </div>
@@ -384,7 +386,7 @@ export default function Home() {
 
             <button
               onClick={addWaypoint}
-              className="mt-6 flex items-center justify-center w-full sm:w-auto gap-2 text-xs font-black text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 px-5 py-3 rounded-xl transition-all border border-slate-700 uppercase tracking-widest shadow-lg active:scale-95"
+              className="mt-6 flex items-center justify-center w-full lg:w-max mx-auto gap-2 text-xs font-black text-slate-600 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 px-6 py-3 rounded-xl transition-all border border-slate-200 uppercase tracking-widest shadow-sm active:scale-95"
             >
               <Plus className="w-4 h-4" /> Tambah Check-point
             </button>
@@ -392,25 +394,25 @@ export default function Home() {
 
           <div className="dashboard-panel p-6 flex flex-col gap-6">
             <div>
-              <h2 className="text-sm font-black font-outfit text-slate-400 uppercase tracking-[0.2em] mb-3 flex items-center gap-2">
+              <h2 className="text-sm font-black font-outfit text-slate-800 uppercase tracking-[0.2em] mb-3 flex items-center gap-2">
                 <Car className="text-blue-500 w-4 h-4" /> Konfigurasi Mesin
               </h2>
               <div className="relative">
                 <select
                   value={selectedVehicle}
                   onChange={(e) => setSelectedVehicle(e.target.value)}
-                  className="w-full px-4 py-3.5 bg-[#0B0F19] border border-slate-800 rounded-xl text-sm font-bold text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 appearance-none shadow-inner"
+                  className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-900 focus:border-blue-400 focus:ring-1 focus:ring-blue-400 appearance-none shadow-sm transition-colors"
                 >
                   {vehiclesData.map(v => (
                     <option key={v.id} value={v.id}>{v.name} (~{v.kml} KM/L)</option>
                   ))}
                   <option value="custom">⚙️ SETUP MANUAL KML</option>
                 </select>
-                <ChevronDown className="absolute right-4 top-4 w-4 h-4 text-slate-500 pointer-events-none" />
+                <ChevronDown className="absolute right-4 top-4 w-4 h-4 text-slate-400 pointer-events-none" />
               </div>
 
               {selectedVehicle === "custom" && (
-                <div className="mt-4 flex items-center gap-3 p-4 bg-slate-900/50 rounded-xl border border-slate-800">
+                <div className="mt-4 flex items-center gap-3 p-4 bg-slate-50 rounded-xl border border-slate-200">
                   <Activity className="w-5 h-5 text-blue-500" />
                   <div className="relative flex-grow">
                     <input
@@ -418,16 +420,18 @@ export default function Home() {
                       value={customKml}
                       onChange={(e) => setCustomKml(e.target.value)}
                       placeholder="Misal: 45.5"
-                      className="w-full bg-transparent border-b border-slate-700 py-1 text-lg font-mono text-white focus:outline-none focus:border-blue-500"
+                      className="w-full bg-transparent border-b border-slate-300 py-1 text-lg font-mono text-slate-900 focus:outline-none focus:border-blue-500"
                     />
                   </div>
-                  <span className="text-xs font-black text-slate-500 uppercase tracking-widest">KM/L</span>
+                  <span className="text-xs font-black text-slate-400 uppercase tracking-widest">KM/L</span>
                 </div>
               )}
             </div>
 
+            <hr className="border-slate-100 my-1" />
+
             <div>
-              <h2 className="text-sm font-black font-outfit text-slate-400 uppercase tracking-[0.2em] mb-3 flex items-center gap-2">
+              <h2 className="text-sm font-black font-outfit text-slate-800 uppercase tracking-[0.2em] mb-3 flex items-center gap-2">
                 <Fuel className="text-emerald-500 w-4 h-4" /> Oktan / BBM
               </h2>
               <div className="relative">
@@ -438,24 +442,24 @@ export default function Home() {
                     const fuel = fuelsData.find(f => f.id === e.target.value);
                     if (fuel) setCustomPrice(fuel.price.toString());
                   }}
-                  className="w-full px-4 py-3.5 bg-[#0B0F19] border border-slate-800 rounded-xl text-sm font-bold text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 appearance-none shadow-inner"
+                  className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-900 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 appearance-none shadow-sm transition-colors"
                 >
                   {fuelsData.map(f => (
                     <option key={f.id} value={f.id}>{f.name}</option>
                   ))}
                 </select>
-                <ChevronDown className="absolute right-4 top-4 w-4 h-4 text-slate-500 pointer-events-none" />
+                <ChevronDown className="absolute right-4 top-4 w-4 h-4 text-slate-400 pointer-events-none" />
               </div>
 
-              <div className="mt-4 flex items-center gap-3 p-4 bg-slate-900/50 rounded-xl border border-slate-800">
+              <div className="mt-4 flex items-center gap-3 p-4 bg-slate-50 rounded-xl border border-slate-200">
                 <span className="text-emerald-500 font-bold">Rp</span>
                 <input
                   type="number"
                   value={customPrice}
                   onChange={(e) => setCustomPrice(e.target.value)}
-                  className="w-full bg-transparent border-b border-slate-700 py-1 text-lg font-mono text-emerald-400 focus:outline-none focus:border-emerald-500 flex-grow"
+                  className="w-full bg-transparent border-b border-slate-300 py-1 text-lg font-mono text-emerald-600 focus:outline-none focus:border-emerald-500 flex-grow"
                 />
-                <span className="text-xs font-black text-slate-500 uppercase tracking-widest">/LTR</span>
+                <span className="text-xs font-black text-slate-400 uppercase tracking-widest">/LTR</span>
               </div>
             </div>
           </div>
@@ -482,40 +486,40 @@ export default function Home() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.95, y: -20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
-                className="dashboard-panel p-6 lg:p-7 relative overflow-hidden"
+                className="dashboard-panel p-6 lg:p-7 relative overflow-hidden ring-1 ring-orange-500/20"
               >
                 {/* HUD Glowing Lines */}
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-50"></div>
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-80"></div>
 
-                <h3 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
+                <h3 className="text-xs font-black text-slate-500 uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
                   <Activity className="w-4 h-4 text-emerald-500" /> Analitik Rute Ditemukan
                 </h3>
 
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                  <div className="bg-[#0B0F19] rounded-2xl p-4 border border-slate-800 shadow-inner flex flex-col justify-center">
-                    <p className="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Total Jarak</p>
-                    <p className="text-2xl md:text-3xl font-mono text-white">
+                  <div className="bg-slate-50 rounded-2xl p-4 border border-slate-200 flex flex-col justify-center">
+                    <p className="text-[10px] md:text-xs font-black text-slate-500 uppercase tracking-widest mb-1">Total Jarak</p>
+                    <p className="text-2xl md:text-3xl font-mono font-bold text-slate-800">
                       {result.distanceKm.toLocaleString('id-ID', { maximumFractionDigits: 1 })} <span className="text-xs font-sans text-slate-500 ml-1">KM</span>
                     </p>
                   </div>
-                  <div className="bg-[#0B0F19] rounded-2xl p-4 border border-slate-800 shadow-inner flex flex-col justify-center">
-                    <p className="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Est. Durasi</p>
-                    <p className="text-2xl md:text-3xl font-mono text-white">
+                  <div className="bg-slate-50 rounded-2xl p-4 border border-slate-200 flex flex-col justify-center">
+                    <p className="text-[10px] md:text-xs font-black text-slate-500 uppercase tracking-widest mb-1">Est. Durasi</p>
+                    <p className="text-2xl md:text-3xl font-mono font-bold text-slate-800">
                       {Math.floor(result.durationMins / 60) > 0 ? `${Math.floor(result.durationMins / 60)}j ` : ''}
                       {result.durationMins % 60} <span className="text-xs font-sans text-slate-500 ml-1">M</span>
                     </p>
                   </div>
-                  <div className="bg-[#0B0F19] rounded-2xl p-4 border border-slate-800 shadow-inner flex flex-col justify-center relative overflow-hidden">
+                  <div className="bg-blue-50 rounded-2xl p-4 border border-blue-100 flex flex-col justify-center relative overflow-hidden">
                     <div className="absolute right-0 bottom-0 w-16 h-16 bg-blue-500/10 blur-xl rounded-full"></div>
-                    <p className="text-[10px] md:text-xs font-bold text-blue-500 uppercase tracking-widest mb-1 z-10">BBM Terbakar</p>
-                    <p className="text-2xl md:text-3xl font-mono text-blue-400 z-10">
+                    <p className="text-[10px] md:text-xs font-black text-blue-600 uppercase tracking-widest mb-1 z-10">BBM Terbakar</p>
+                    <p className="text-2xl md:text-3xl font-mono font-bold text-blue-600 z-10">
                       {result.fuelNeededLiter.toLocaleString('id-ID', { maximumFractionDigits: 2 })} <span className="text-xs font-sans text-blue-500/50 ml-1">LTR</span>
                     </p>
                   </div>
-                  <div className="bg-gradient-to-b from-[#132B22] to-[#0A1612] rounded-2xl p-4 border border-emerald-900 shadow-lg relative overflow-hidden col-span-2 lg:col-span-1 flex flex-col justify-center">
-                    <div className="absolute -right-4 -top-4 w-24 h-24 bg-emerald-500/20 blur-2xl rounded-full"></div>
-                    <p className="text-[10px] md:text-xs font-black text-emerald-500/70 uppercase tracking-widest mb-1 z-10 flex items-center gap-1"><DollarSign className="w-3 h-3" /> Cost</p>
-                    <p className="text-2xl md:text-3xl font-mono text-emerald-400 tracking-tight z-10 text-shadow-glow">
+                  <div className="bg-emerald-50 rounded-2xl p-4 border border-emerald-100 relative overflow-hidden col-span-2 lg:col-span-1 flex flex-col justify-center">
+                    <div className="absolute -right-4 -top-4 w-24 h-24 bg-emerald-500/10 blur-2xl rounded-full"></div>
+                    <p className="text-[10px] md:text-xs font-black text-emerald-600 uppercase tracking-widest mb-1 z-10 flex items-center gap-1"><DollarSign className="w-3 h-3" /> Cost</p>
+                    <p className="text-2xl md:text-3xl font-mono font-bold text-emerald-600 tracking-tight z-10">
                       <span className="text-sm font-sans mr-1 opacity-70">Rp</span>{Math.round(result.totalCost).toLocaleString('id-ID')}
                     </p>
                   </div>
@@ -524,13 +528,11 @@ export default function Home() {
             )}
           </AnimatePresence>
 
-          <div className="flex-grow w-full rounded-3xl overflow-hidden dashboard-panel border border-slate-700/50 relative min-h-[350px] lg:min-h-0 bg-[#0f172a]">
-            {/* Overlay Grid di atas peta (hanya pointer event none) */}
-            <div className="absolute inset-0 z-20 pointer-events-none border-[12px] border-[#131B2B] rounded-3xl opacity-50 mix-blend-overlay"></div>
+          <div className="flex-grow w-full rounded-3xl overflow-hidden dashboard-panel relative min-h-[350px] lg:min-h-0">
             {isLoaded ? (
               <MapDisplay points={waypoints} routeCoordinates={routeCoordinates} />
             ) : (
-              <div className="w-full h-full flex flex-col items-center justify-center text-slate-500 gap-3">
+              <div className="w-full h-full flex flex-col items-center justify-center text-slate-500 gap-3 bg-slate-50">
                 <RefreshCw className="w-6 h-6 animate-spin text-orange-500/50" />
                 <span className="text-sm font-semibold tracking-widest uppercase">Menghubungkan Satelit...</span>
               </div>
@@ -540,34 +542,34 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ... [Konten SEO] ... */}
-      <div className="mt-32 pt-16 border-t border-slate-800/80 relative">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-[1px] bg-gradient-to-r from-transparent via-slate-500 to-transparent"></div>
+      {/* SEO INFO SECTION */}
+      <div className="mt-32 pt-16 border-t border-slate-200 relative">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-[1px] bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
 
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-outfit font-black text-white mb-6 tracking-tight" id="efisiensi">Spesifikasi KML Resmi (Engine DB)</h2>
-          <p className="text-slate-400 max-w-2xl mx-auto font-medium">Algoritma kalkulasi kami mengambil referensi konsumsi bahan bakar (Kilometer / Liter) dari data pengujian jalan kombinasi pabrikan otomotif.</p>
+          <h2 className="text-3xl md:text-4xl font-outfit font-black text-slate-900 mb-6 tracking-tight" id="efisiensi">Spesifikasi KML Resmi (Engine DB)</h2>
+          <p className="text-slate-600 max-w-2xl mx-auto font-medium">Algoritma kalkulasi kami mengambil referensi konsumsi bahan bakar (Kilometer / Liter) dari data pengujian jalan kombinasi pabrikan otomotif.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
           <div className="dashboard-panel p-8">
-            <h3 className="text-lg font-black text-slate-300 uppercase tracking-widest mb-8 flex items-center gap-3"><Car className="text-blue-500" /> Rasio Mobil</h3>
+            <h3 className="text-lg font-black text-slate-900 uppercase tracking-widest mb-8 flex items-center gap-3"><Car className="text-blue-500" /> Rasio Mobil</h3>
             <ul className="space-y-1">
               {vehiclesData.filter(v => v.type === 'mobil').map(v => (
-                <li key={v.id} className="flex justify-between border-b border-slate-800/50 py-3 font-medium text-sm hover:bg-slate-800/20 px-2 rounded transition-colors group">
-                  <span className="text-slate-400 group-hover:text-white transition-colors">{v.name}</span>
-                  <span className="text-blue-400 font-mono bg-blue-900/20 border border-blue-900/50 px-2 py-0.5 rounded shadow-inner">{v.kml} KML</span>
+                <li key={v.id} className="flex justify-between border-b border-slate-100 py-3 font-medium text-sm hover:bg-slate-50 px-2 rounded transition-colors group">
+                  <span className="text-slate-600 group-hover:text-slate-900 transition-colors">{v.name}</span>
+                  <span className="text-blue-600 font-mono font-bold bg-blue-50 border border-blue-200 px-2 py-0.5 rounded shadow-sm">{v.kml} KML</span>
                 </li>
               ))}
             </ul>
           </div>
           <div className="dashboard-panel p-8">
-            <h3 className="text-lg font-black text-slate-300 uppercase tracking-widest mb-8 flex items-center gap-3"><Car className="text-emerald-500" /> Rasio Motor</h3>
+            <h3 className="text-lg font-black text-slate-900 uppercase tracking-widest mb-8 flex items-center gap-3"><Car className="text-emerald-500" /> Rasio Motor</h3>
             <ul className="space-y-1">
               {vehiclesData.filter(v => v.type === 'motor').map(v => (
-                <li key={v.id} className="flex justify-between border-b border-slate-800/50 py-3 font-medium text-sm hover:bg-slate-800/20 px-2 rounded transition-colors group">
-                  <span className="text-slate-400 group-hover:text-white transition-colors">{v.name}</span>
-                  <span className="text-emerald-400 font-mono bg-emerald-900/20 border border-emerald-900/50 px-2 py-0.5 rounded shadow-inner">{v.kml} KML</span>
+                <li key={v.id} className="flex justify-between border-b border-slate-100 py-3 font-medium text-sm hover:bg-slate-50 px-2 rounded transition-colors group">
+                  <span className="text-slate-600 group-hover:text-slate-900 transition-colors">{v.name}</span>
+                  <span className="text-emerald-600 font-mono font-bold bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded shadow-sm">{v.kml} KML</span>
                 </li>
               ))}
             </ul>
@@ -575,31 +577,31 @@ export default function Home() {
         </div>
 
         <div className="max-w-4xl mx-auto" id="faq">
-          <h2 className="text-3xl md:text-4xl font-outfit font-black text-white mb-10 tracking-tight text-center">Inteligensi Bahan Bakar</h2>
+          <h2 className="text-3xl md:text-4xl font-outfit font-black text-slate-900 mb-10 tracking-tight text-center">Inteligensi Bahan Bakar</h2>
 
           <div className="space-y-6">
-            <div className="dashboard-panel p-8 px-8 md:px-10 hover:border-slate-700 transition-colors">
-              <h3 className="text-xl font-bold text-slate-200 mb-4 flex items-center gap-3 font-outfit">
-                <div className="w-10 h-10 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-orange-500 font-black shadow-inner">01</div>
+            <div className="dashboard-panel p-8 px-8 md:px-10 hover:border-slate-300 transition-colors">
+              <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3 font-outfit">
+                <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-orange-500 font-black shadow-sm">01</div>
                 Bagaimana Sistem Kalkulasi Bekerja?
               </h3>
-              <p className="leading-relaxed text-slate-400 ml-14 text-sm md:text-base">BahanBakar.id memadukan teknologi instrumen Geocoding OpenStreetMap dan Routing Engine OSRM untuk memetakan jarak tempuh aktual. Sistem tidak menggunakan garis lurus, melainkan mengikuti lekukan jalan darat dan jalan tol empiris sinkron dengan perhitungan GPS modern.</p>
+              <p className="leading-relaxed text-slate-600 ml-14 text-sm md:text-base">BahanBakar.id memadukan teknologi instrumen Geocoding OpenStreetMap dan Routing Engine OSRM untuk memetakan jarak tempuh aktual. Sistem tidak menggunakan garis lurus, melainkan mengikuti lekukan jalan darat dan jalan tol empiris sinkron dengan perhitungan GPS modern.</p>
             </div>
 
-            <div className="dashboard-panel p-8 px-8 md:px-10 hover:border-slate-700 transition-colors">
-              <h3 className="text-xl font-bold text-slate-200 mb-4 flex items-center gap-3 font-outfit">
-                <div className="w-10 h-10 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-orange-500 font-black shadow-inner">02</div>
+            <div className="dashboard-panel p-8 px-8 md:px-10 hover:border-slate-300 transition-colors">
+              <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3 font-outfit">
+                <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-orange-500 font-black shadow-sm">02</div>
                 Mengapa Terdapat Deviasi BBM di Lapangan?
               </h3>
-              <p className="leading-relaxed text-slate-400 ml-14 text-sm md:text-base">Parameter KML (Kilometer per Liter) yang tertanam pada database kami mengambil rerata uji coba kombinasi wajar. Beban bagasi berlebih, kemacetan rute stop-and-go agresif, hingga deviasi takik tekanan angin ban Anda dapat mereduksi tingkat efisiensi bakar secara drastis.</p>
+              <p className="leading-relaxed text-slate-600 ml-14 text-sm md:text-base">Parameter KML (Kilometer per Liter) yang tertanam pada database kami mengambil rerata uji coba kombinasi wajar. Beban bagasi berlebih, kemacetan rute stop-and-go agresif, hingga deviasi takik tekanan angin ban Anda dapat mereduksi tingkat efisiensi bakar secara drastis.</p>
             </div>
 
-            <div className="dashboard-panel p-8 px-8 md:px-10 hover:border-slate-700 transition-colors">
-              <h3 className="text-xl font-bold text-slate-200 mb-4 flex items-center gap-3 font-outfit">
-                <div className="w-10 h-10 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-orange-500 font-black shadow-inner">03</div>
+            <div className="dashboard-panel p-8 px-8 md:px-10 hover:border-slate-300 transition-colors">
+              <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3 font-outfit">
+                <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-orange-500 font-black shadow-sm">03</div>
                 Taktik Optimasi Pembakaran (Eco-Driving)
               </h3>
-              <p className="leading-relaxed text-slate-400 ml-14 text-sm md:text-base">Pertahankan RPM (Revolutions Per Minute) stabil dan hindari injakan pedal gas (akselerasi) secara tiba-tiba. Di jalan bebas hambatan, melaju konstan pada kecepatan jelajah 80-90 km/jam meminimalisasi coefisien hambat aerodinamika body kendaraan Anda secara maksimal.</p>
+              <p className="leading-relaxed text-slate-600 ml-14 text-sm md:text-base">Pertahankan RPM (Revolutions Per Minute) stabil dan hindari injakan pedal gas (akselerasi) secara tiba-tiba. Di jalan bebas hambatan, melaju konstan pada kecepatan jelajah 80-90 km/jam meminimalisasi coefisien hambat aerodinamika body kendaraan Anda secara maksimal.</p>
             </div>
           </div>
         </div>
