@@ -277,10 +277,10 @@ export default function Home() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-auto lg:h-[760px] relative z-10 block">
+      <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 xl:gap-10 relative z-10 w-full mb-10">
 
         {/* LEFT PANEL : DASHBOARD CONTROLS */}
-        <div className="lg:col-span-5 flex flex-col gap-6 overflow-y-auto pr-2 pb-4 scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-transparent">
+        <div className="w-full lg:w-5/12 xl:w-1/3 flex flex-col gap-6 flex-shrink-0">
 
           {errorMsg && (
             <div className="p-4 bg-red-50 text-red-600 rounded-2xl flex items-start gap-3 border border-red-200 shadow-sm">
@@ -480,7 +480,7 @@ export default function Home() {
         </div>
 
         {/* RIGHT PANEL - HASIL & MAP */}
-        <div className="lg:col-span-7 flex flex-col gap-6 h-full">
+        <div className="w-full lg:w-7/12 xl:w-2/3 flex flex-col gap-6 min-h-[500px] lg:min-h-[800px]">
 
           <AnimatePresence>
             {result && (
@@ -529,7 +529,7 @@ export default function Home() {
             )}
           </AnimatePresence>
 
-          <div className="flex-grow w-full rounded-3xl overflow-hidden dashboard-panel relative min-h-[350px] lg:min-h-0">
+          <div className="flex-grow w-full rounded-3xl overflow-hidden dashboard-panel relative min-h-[400px] lg:h-full lg:min-h-0 flex-1 shadow-sm border border-slate-200 bg-slate-50">
             {isLoaded ? (
               <MapDisplay points={waypoints} routeCoordinates={routeCoordinates} />
             ) : (
