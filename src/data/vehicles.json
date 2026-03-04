@@ -1,0 +1,14 @@
+[
+  { "id": "beat", "name": "Honda BeAT", "type": "motor", "kml": 60.6 },
+  { "id": "vario125", "name": "Honda Vario 125", "type": "motor", "kml": 51.7 },
+  { "id": "nmax", "name": "Yamaha NMAX", "type": "motor", "kml": 39.5 },
+  { "id": "pcx160", "name": "Honda PCX 160", "type": "motor", "kml": 45 },
+  { "id": "aerox", "name": "Yamaha Aerox 155", "type": "motor", "kml": 40.0 },
+  { "id": "scoopy", "name": "Honda Scoopy", "type": "motor", "kml": 59.0 },
+  { "id": "avanza", "name": "Toyota Avanza", "type": "mobil", "kml": 14.5 },
+  { "id": "brio", "name": "Honda Brio", "type": "mobil", "kml": 20.0 },
+  { "id": "innova_z", "name": "Toyota Kijang Innova Zenix HV", "type": "mobil", "kml": 21.0 },
+  { "id": "calya", "name": "Toyota Calya", "type": "mobil", "kml": 19.2 },
+  { "id": "xpander", "name": "Mitsubishi Xpander", "type": "mobil", "kml": 15.0 },
+  { "id": "pajero", "name": "Mitsubishi Pajero Sport", "type": "mobil", "kml": 11.5 }
+]

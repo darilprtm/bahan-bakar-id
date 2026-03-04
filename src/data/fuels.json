@@ -1,0 +1,50 @@
+[
+    {
+        "id": "pertalite",
+        "name": "Pertalite",
+        "price": 10000,
+        "color": "text-green-500"
+    },
+    {
+        "id": "pertamax",
+        "name": "Pertamax",
+        "price": 12950,
+        "color": "text-blue-500"
+    },
+    {
+        "id": "pertamax_turbo",
+        "name": "Pertamax Turbo",
+        "price": 14400,
+        "color": "text-red-500"
+    },
+    {
+        "id": "biosolar",
+        "name": "Biosolar",
+        "price": 6800,
+        "color": "text-emerald-700"
+    },
+    {
+        "id": "dexlite",
+        "name": "Dexlite",
+        "price": 14550,
+        "color": "text-gray-500"
+    },
+    {
+        "id": "pertamina_dex",
+        "name": "Pertamina Dex",
+        "price": 15100,
+        "color": "text-green-800"
+    },
+    {
+        "id": "shell_super",
+        "name": "Shell Super",
+        "price": 13990,
+        "color": "text-yellow-500"
+    },
+    {
+        "id": "shell_vpower",
+        "name": "Shell V-Power",
+        "price": 14990,
+        "color": "text-red-600"
+    }
+]
