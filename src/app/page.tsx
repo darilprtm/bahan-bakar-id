@@ -404,9 +404,16 @@ export default function Home() {
                   onChange={(e) => setSelectedVehicle(e.target.value)}
                   className="w-full px-3 sm:px-4 py-3 sm:py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-bold text-slate-900 focus:border-blue-400 focus:ring-1 focus:ring-blue-400 appearance-none shadow-sm transition-colors"
                 >
-                  {vehiclesData.map(v => (
-                    <option key={v.id} value={v.id}>{v.name} (~{v.kml} KM/L)</option>
-                  ))}
+                  <optgroup label="Daftar Sepeda Motor">
+                    {vehiclesData.filter(v => v.type === 'motor').map(v => (
+                      <option key={v.id} value={v.id}>{v.name} (~{v.kml} KM/L)</option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="Daftar Mobil Keluarga & SUV">
+                    {vehiclesData.filter(v => v.type === 'mobil').map(v => (
+                      <option key={v.id} value={v.id}>{v.name} (~{v.kml} KM/L)</option>
+                    ))}
+                  </optgroup>
                   <option value="custom">⚙️ SETUP MANUAL KML</option>
                 </select>
                 <ChevronDown className="absolute right-4 top-3.5 sm:top-4 w-4 h-4 text-slate-400 pointer-events-none" />

@@ -1,14 +1,338 @@
 [
-  { "id": "beat", "name": "Honda BeAT", "type": "motor", "kml": 60.6 },
-  { "id": "vario125", "name": "Honda Vario 125", "type": "motor", "kml": 51.7 },
-  { "id": "nmax", "name": "Yamaha NMAX", "type": "motor", "kml": 39.5 },
-  { "id": "pcx160", "name": "Honda PCX 160", "type": "motor", "kml": 45 },
-  { "id": "aerox", "name": "Yamaha Aerox 155", "type": "motor", "kml": 40.0 },
-  { "id": "scoopy", "name": "Honda Scoopy", "type": "motor", "kml": 59.0 },
-  { "id": "avanza", "name": "Toyota Avanza", "type": "mobil", "kml": 14.5 },
-  { "id": "brio", "name": "Honda Brio", "type": "mobil", "kml": 20.0 },
-  { "id": "innova_z", "name": "Toyota Kijang Innova Zenix HV", "type": "mobil", "kml": 21.0 },
-  { "id": "calya", "name": "Toyota Calya", "type": "mobil", "kml": 19.2 },
-  { "id": "xpander", "name": "Mitsubishi Xpander", "type": "mobil", "kml": 15.0 },
-  { "id": "pajero", "name": "Mitsubishi Pajero Sport", "type": "mobil", "kml": 11.5 }
+  {
+    "id": "beat",
+    "name": "Honda BeAT",
+    "type": "motor",
+    "kml": 60.6
+  },
+  {
+    "id": "scoopy",
+    "name": "Honda Scoopy",
+    "type": "motor",
+    "kml": 59.0
+  },
+  {
+    "id": "vario125",
+    "name": "Honda Vario 125",
+    "type": "motor",
+    "kml": 51.7
+  },
+  {
+    "id": "vario160",
+    "name": "Honda Vario 160",
+    "type": "motor",
+    "kml": 46.9
+  },
+  {
+    "id": "pcx160",
+    "name": "Honda PCX 160",
+    "type": "motor",
+    "kml": 45.0
+  },
+  {
+    "id": "adv160",
+    "name": "Honda ADV 160",
+    "type": "motor",
+    "kml": 45.0
+  },
+  {
+    "id": "supra125",
+    "name": "Honda Supra X 125",
+    "type": "motor",
+    "kml": 57.2
+  },
+  {
+    "id": "revo",
+    "name": "Honda Revo X",
+    "type": "motor",
+    "kml": 62.2
+  },
+  {
+    "id": "cb150r",
+    "name": "Honda CB150R Streetfire",
+    "type": "motor",
+    "kml": 40.5
+  },
+  {
+    "id": "cbr150r",
+    "name": "Honda CBR150R",
+    "type": "motor",
+    "kml": 39.7
+  },
+  {
+    "id": "crf150l",
+    "name": "Honda CRF150L",
+    "type": "motor",
+    "kml": 39.3
+  },
+  {
+    "id": "nmax",
+    "name": "Yamaha NMAX 155",
+    "type": "motor",
+    "kml": 39.5
+  },
+  {
+    "id": "aerox",
+    "name": "Yamaha Aerox 155",
+    "type": "motor",
+    "kml": 40.0
+  },
+  {
+    "id": "lexi",
+    "name": "Yamaha Lexi LX 155",
+    "type": "motor",
+    "kml": 42.0
+  },
+  {
+    "id": "fazzio",
+    "name": "Yamaha Fazzio Hybrid",
+    "type": "motor",
+    "kml": 56.1
+  },
+  {
+    "id": "filano",
+    "name": "Yamaha Grand Filano",
+    "type": "motor",
+    "kml": 60.0
+  },
+  {
+    "id": "miom3",
+    "name": "Yamaha Mio M3",
+    "type": "motor",
+    "kml": 46.0
+  },
+  {
+    "id": "gear125",
+    "name": "Yamaha Gear 125",
+    "type": "motor",
+    "kml": 47.0
+  },
+  {
+    "id": "vixion",
+    "name": "Yamaha V-Ixion 150",
+    "type": "motor",
+    "kml": 35.0
+  },
+  {
+    "id": "r15",
+    "name": "Yamaha YZF-R15",
+    "type": "motor",
+    "kml": 37.0
+  },
+  {
+    "id": "address",
+    "name": "Suzuki Address",
+    "type": "motor",
+    "kml": 53.0
+  },
+  {
+    "id": "nex2",
+    "name": "Suzuki Nex II",
+    "type": "motor",
+    "kml": 49.0
+  },
+  {
+    "id": "gsxr150",
+    "name": "Suzuki GSX-R150",
+    "type": "motor",
+    "kml": 39.0
+  },
+  {
+    "id": "vespa_sprint",
+    "name": "Vespa Sprint 150",
+    "type": "motor",
+    "kml": 32.0
+  },
+  {
+    "id": "vespa_primavera",
+    "name": "Vespa Primavera 150",
+    "type": "motor",
+    "kml": 32.0
+  },
+  {
+    "id": "avanza",
+    "name": "Toyota Avanza",
+    "type": "mobil",
+    "kml": 14.5
+  },
+  {
+    "id": "veloz",
+    "name": "Toyota Veloz",
+    "type": "mobil",
+    "kml": 13.5
+  },
+  {
+    "id": "rush",
+    "name": "Toyota Rush",
+    "type": "mobil",
+    "kml": 12.5
+  },
+  {
+    "id": "innova_z",
+    "name": "Toyota Kijang Innova Zenix HV",
+    "type": "mobil",
+    "kml": 21.0
+  },
+  {
+    "id": "innova_reborn",
+    "name": "Toyota Kijang Innova Reborn (Diesel)",
+    "type": "mobil",
+    "kml": 12.5
+  },
+  {
+    "id": "fortuner",
+    "name": "Toyota Fortuner 2.8 VRZ",
+    "type": "mobil",
+    "kml": 11.0
+  },
+  {
+    "id": "agya",
+    "name": "Toyota Agya",
+    "type": "mobil",
+    "kml": 20.5
+  },
+  {
+    "id": "calya",
+    "name": "Toyota Calya",
+    "type": "mobil",
+    "kml": 19.2
+  },
+  {
+    "id": "raize",
+    "name": "Toyota Raize 1.0T",
+    "type": "mobil",
+    "kml": 17.5
+  },
+  {
+    "id": "yaris_cross",
+    "name": "Toyota Yaris Cross HEV",
+    "type": "mobil",
+    "kml": 30.0
+  },
+  {
+    "id": "xenia",
+    "name": "Daihatsu Xenia",
+    "type": "mobil",
+    "kml": 14.0
+  },
+  {
+    "id": "terios",
+    "name": "Daihatsu Terios",
+    "type": "mobil",
+    "kml": 12.0
+  },
+  {
+    "id": "ayla",
+    "name": "Daihatsu Ayla",
+    "type": "mobil",
+    "kml": 21.0
+  },
+  {
+    "id": "sigra",
+    "name": "Daihatsu Sigra",
+    "type": "mobil",
+    "kml": 19.0
+  },
+  {
+    "id": "rocky",
+    "name": "Daihatsu Rocky",
+    "type": "mobil",
+    "kml": 17.5
+  },
+  {
+    "id": "brio",
+    "name": "Honda Brio Satya",
+    "type": "mobil",
+    "kml": 20.0
+  },
+  {
+    "id": "mobilio",
+    "name": "Honda Mobilio",
+    "type": "mobil",
+    "kml": 16.0
+  },
+  {
+    "id": "brv",
+    "name": "Honda BR-V",
+    "type": "mobil",
+    "kml": 15.5
+  },
+  {
+    "id": "hrv",
+    "name": "Honda HR-V",
+    "type": "mobil",
+    "kml": 14.0
+  },
+  {
+    "id": "crv",
+    "name": "Honda CR-V Turbo",
+    "type": "mobil",
+    "kml": 12.0
+  },
+  {
+    "id": "city_hb",
+    "name": "Honda City Hatchback",
+    "type": "mobil",
+    "kml": 17.0
+  },
+  {
+    "id": "xpander",
+    "name": "Mitsubishi Xpander",
+    "type": "mobil",
+    "kml": 15.0
+  },
+  {
+    "id": "xpander_cross",
+    "name": "Mitsubishi Xpander Cross",
+    "type": "mobil",
+    "kml": 14.5
+  },
+  {
+    "id": "pajero",
+    "name": "Mitsubishi Pajero Sport",
+    "type": "mobil",
+    "kml": 11.5
+  },
+  {
+    "id": "ertiga_hybrid",
+    "name": "Suzuki Ertiga Hybrid",
+    "type": "mobil",
+    "kml": 18.5
+  },
+  {
+    "id": "xl7",
+    "name": "Suzuki XL7",
+    "type": "mobil",
+    "kml": 15.5
+  },
+  {
+    "id": "jimny",
+    "name": "Suzuki Jimny",
+    "type": "mobil",
+    "kml": 13.5
+  },
+  {
+    "id": "stargazer",
+    "name": "Hyundai Stargazer",
+    "type": "mobil",
+    "kml": 15.5
+  },
+  {
+    "id": "creta",
+    "name": "Hyundai Creta",
+    "type": "mobil",
+    "kml": 16.0
+  },
+  {
+    "id": "confero",
+    "name": "Wuling Confero S",
+    "type": "mobil",
+    "kml": 13.0
+  },
+  {
+    "id": "alvez",
+    "name": "Wuling Alvez",
+    "type": "mobil",
+    "kml": 15.0
+  }
 ]
