@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Metadata } from 'next';
 import articlesData from '../../data/articles.json';
 import { BookOpen, Calendar, User, ArrowRight } from 'lucide-react';
@@ -30,11 +31,9 @@ export default function BlogIndex() {
                     <Link href={`/blog/${article.slug}`} key={article.id} className="group">
                         <div className="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-200 h-full flex flex-col transition-all duration-300 hover:shadow-xl hover:shadow-orange-500/10 hover:border-orange-200 hover:-translate-y-2">
 
-                            {/* Dummy Image Placeholder */}
-                            <div className="h-48 w-full bg-slate-100 flex items-center justify-center relative overflow-hidden group-hover:bg-orange-50 transition-colors">
-                                <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-multiply"></div>
-                                <BookOpen className="w-12 h-12 text-slate-300 group-hover:text-orange-400/50 transition-colors relative z-10" />
-                                <span className="absolute bottom-4 left-4 bg-white/90 backdrop-blur text-xs font-bold px-3 py-1 rounded-full text-slate-700 shadow-sm">
+                            <div className="h-56 w-full bg-slate-100 flex items-center justify-center relative overflow-hidden group-hover:bg-orange-50 transition-colors">
+                                <Image src={article.imageUrl} alt={article.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                                <span className="absolute bottom-4 left-4 bg-white/90 backdrop-blur text-xs font-bold px-3 py-1 rounded-full text-slate-700 shadow-sm z-20">
                                     {article.category}
                                 </span>
                             </div>

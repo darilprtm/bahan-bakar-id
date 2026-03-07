@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import articlesData from '../data/articles.json'
+import vehiclesData from '../data/vehicles.json'
 
 export default function sitemap(): MetadataRoute.Sitemap {
     const baseUrl = 'https://bahan-bakar-id.vercel.app'
@@ -36,11 +37,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: 'yearly',
             priority: 0.7,
         },
+        {
+            url: `${baseUrl}/kendaraan`,
+            lastModified,
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        },
         ...articlesData.map((article) => ({
             url: `${baseUrl}/blog/${article.slug}`,
             lastModified: new Date(article.date),
             changeFrequency: 'monthly' as const,
             priority: 0.9,
+        })),
+        ...vehiclesData.map((vehicle) => ({
+            url: `${baseUrl}/kendaraan/${vehicle.id}`,
+            lastModified,
+            changeFrequency: 'yearly' as const,
+            priority: 0.8,
         })),
     ]
 }

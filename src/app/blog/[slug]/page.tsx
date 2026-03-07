@@ -1,6 +1,7 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
+import Image from 'next/image';
 import articlesData from '../../../data/articles.json';
 import Link from 'next/link';
 import { Calendar, User, Tag, ChevronLeft, BookOpen } from 'lucide-react';
@@ -74,6 +75,11 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
                         </div>
                     </div>
                 </header>
+
+                {/* Hero Image */}
+                <div className="relative w-full h-64 md:h-[400px] rounded-3xl overflow-hidden mb-12 shadow-sm border border-slate-100">
+                    <Image src={article.imageUrl} alt={article.title} fill className="object-cover" priority />
+                </div>
 
                 {/* Content Body Rendering */}
                 <div className="prose prose-slate prose-lg md:prose-xl prose-orange max-w-none text-slate-700 leading-relaxed font-sans">

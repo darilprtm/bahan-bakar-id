@@ -39,7 +39,7 @@ export default function RootLayout({
             <nav className="hidden sm:flex gap-8 font-semibold text-sm text-slate-500">
               <Link href="/" className="hover:text-orange-600 transition-colors">Kalkulator</Link>
               <Link href="/blog" className="hover:text-orange-600 transition-colors">Ensiklopedia BBM</Link>
-              <Link href="/#efisiensi" className="hover:text-orange-600 transition-colors">Database Kendaraan</Link>
+              <Link href="/kendaraan" className="hover:text-orange-600 transition-colors">Database Kendaraan</Link>
             </nav>
           </div>
         </header>
@@ -61,7 +61,7 @@ export default function RootLayout({
               <ul className="space-y-3 font-medium">
                 <li><Link href="/" className="hover:text-orange-600 transition-colors">Kalkulator Utama</Link></li>
                 <li><Link href="/blog" className="hover:text-orange-600 transition-colors">Blog Otomotif (Baru)</Link></li>
-                <li><Link href="/#efisiensi" className="hover:text-orange-600 transition-colors">Daftar KML Resmi</Link></li>
+                <li><Link href="/kendaraan" className="hover:text-orange-600 transition-colors">Daftar KML Resmi</Link></li>
               </ul>
             </div>
             <div>
