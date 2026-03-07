@@ -14,8 +14,9 @@ export async function generateStaticParams() {
 }
 
 // Dynamic Metadata Setup
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-    const article = articlesData.find((a) => a.slug === params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+    const resolvedParams = await params;
+    const article = articlesData.find((a) => a.slug === resolvedParams.slug);
     if (!article) return { title: 'Not Found' };
 
     return {
@@ -25,8 +26,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     };
 }
 
-export default function BlogPost({ params }: { params: { slug: string } }) {
-    const article = articlesData.find((a) => a.slug === params.slug);
+export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
+    const resolvedParams = await params;
+    const article = articlesData.find((a) => a.slug === resolvedParams.slug);
 
     if (!article) {
         notFound();

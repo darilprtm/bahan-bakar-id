@@ -11,8 +11,9 @@ export async function generateStaticParams() {
     }));
 }
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-    const vehicle = vehiclesData.find((v) => v.id === params.id);
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+    const resolvedParams = await params;
+    const vehicle = vehiclesData.find((v) => v.id === resolvedParams.id);
     if (!vehicle) return { title: 'Kendaraan Tidak Ditemukan' };
 
     return {
@@ -22,8 +23,9 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     };
 }
 
-export default function VehicleDetail({ params }: { params: { id: string } }) {
-    const vehicle = vehiclesData.find((v) => v.id === params.id);
+export default async function VehicleDetail({ params }: { params: Promise<{ id: string }> }) {
+    const resolvedParams = await params;
+    const vehicle = vehiclesData.find((v) => v.id === resolvedParams.id);
 
     if (!vehicle) {
         notFound();
