@@ -37,46 +37,45 @@ export default function RootLayout({
                 BahanBakar<span className="text-orange-500">.id</span>
               </span>
             </div>
+            <Navbar />
           </div>
-          <Navbar />
-        </div>
-      </header>
+        </header>
 
-      <main className="flex-grow">
-        {children}
-      </main>
+        <main className="flex-grow">
+          {children}
+        </main>
 
-      <footer className="bg-white border-t border-slate-200 text-slate-500 py-12 text-sm mt-auto shadow-inner">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="col-span-1 md:col-span-2">
-            <span className="font-outfit text-2xl font-black text-slate-800 mb-4 block">
-              BahanBakar<span className="text-orange-500">.id</span>
-            </span>
-            <p className="max-w-md text-slate-500 leading-relaxed">Kalkulator perjalanan presisi. Menghubungkan teknologi geolokasi dan mesin routing cerdas untuk menakar konsumsi bahan bakar perjalanan Anda secara akurat.</p>
+        <footer className="bg-white border-t border-slate-200 text-slate-500 py-12 text-sm mt-auto shadow-inner">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="col-span-1 md:col-span-2">
+              <span className="font-outfit text-2xl font-black text-slate-800 mb-4 block">
+                BahanBakar<span className="text-orange-500">.id</span>
+              </span>
+              <p className="max-w-md text-slate-500 leading-relaxed">Kalkulator perjalanan presisi. Menghubungkan teknologi geolokasi dan mesin routing cerdas untuk menakar konsumsi bahan bakar perjalanan Anda secara akurat.</p>
+            </div>
+            <div>
+              <h4 className="text-slate-800 font-bold mb-4 tracking-wide uppercase text-xs">Navigasi Rute</h4>
+              <ul className="space-y-3 font-medium">
+                <li><Link href="/" className="hover:text-orange-600 transition-colors">Kalkulator Utama</Link></li>
+                <li><Link href="/blog" className="hover:text-orange-600 transition-colors">Blog Otomotif (Baru)</Link></li>
+                <li><Link href="/kendaraan" className="hover:text-orange-600 transition-colors">Daftar KML Resmi</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-slate-800 font-bold mb-4 tracking-wide uppercase text-xs">Legalitas</h4>
+              <ul className="space-y-3 font-medium">
+                <li><Link href="/privacy-policy" className="hover:text-orange-600 transition-colors">Kebijakan Privasi</Link></li>
+                <li><Link href="/terms-of-service" className="hover:text-orange-600 transition-colors">Syarat Penggunaan</Link></li>
+                <li><Link href="/disclaimer" className="hover:text-orange-600 transition-colors">Sanggahan Akurasi</Link></li>
+                <li><Link href="/contact" className="hover:text-orange-600 transition-colors">Kontak Developer</Link></li>
+              </ul>
+            </div>
           </div>
-          <div>
-            <h4 className="text-slate-800 font-bold mb-4 tracking-wide uppercase text-xs">Navigasi Rute</h4>
-            <ul className="space-y-3 font-medium">
-              <li><Link href="/" className="hover:text-orange-600 transition-colors">Kalkulator Utama</Link></li>
-              <li><Link href="/blog" className="hover:text-orange-600 transition-colors">Blog Otomotif (Baru)</Link></li>
-              <li><Link href="/kendaraan" className="hover:text-orange-600 transition-colors">Daftar KML Resmi</Link></li>
-            </ul>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-slate-100 flex justify-between items-center text-xs text-slate-400 font-semibold">
+            <p>&copy; {new Date().getFullYear()} Daril Pratomo. Hak Cipta Dilindungi.</p>
           </div>
-          <div>
-            <h4 className="text-slate-800 font-bold mb-4 tracking-wide uppercase text-xs">Legalitas</h4>
-            <ul className="space-y-3 font-medium">
-              <li><Link href="/privacy-policy" className="hover:text-orange-600 transition-colors">Kebijakan Privasi</Link></li>
-              <li><Link href="/terms-of-service" className="hover:text-orange-600 transition-colors">Syarat Penggunaan</Link></li>
-              <li><Link href="/disclaimer" className="hover:text-orange-600 transition-colors">Sanggahan Akurasi</Link></li>
-              <li><Link href="/contact" className="hover:text-orange-600 transition-colors">Kontak Developer</Link></li>
-            </ul>
-          </div>
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-slate-100 flex justify-between items-center text-xs text-slate-400 font-semibold">
-          <p>&copy; {new Date().getFullYear()} Daril Pratomo. Hak Cipta Dilindungi.</p>
-        </div>
-      </footer>
-    </body>
+        </footer>
+      </body>
     </html >
   );
 }
