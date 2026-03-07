@@ -75,7 +75,7 @@ export default function RootLayout({
             </div>
           </div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-slate-100 flex justify-between items-center text-xs text-slate-400 font-semibold">
-            <p>&copy; {new Date().getFullYear()} BahanBakar.id a.n Daril Pratomo. Semua Hak Milik Terdaftar.</p>
+            <p>&copy; {new Date().getFullYear()} Daril Pratomo. Hak Cipta Dilindungi.</p>
           </div>
         </footer>
       </body>
