@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://bahan-bakar-id.vercel.app/sitemap.xml

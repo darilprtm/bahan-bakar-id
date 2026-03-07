@@ -576,32 +576,62 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="max-w-4xl mx-auto" id="faq">
-          <h2 className="text-3xl md:text-4xl font-outfit font-black text-slate-900 mb-10 tracking-tight text-center">Inteligensi Bahan Bakar</h2>
+        <div className="max-w-4xl mx-auto" id="artikel">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-5xl font-outfit font-black text-slate-900 mb-6 tracking-tight">Ensiklopedia Efisiensi BBM</h2>
+            <p className="text-slate-600 text-lg font-medium">Panduan komprehensif, wawasan industri otomotif, dan metodologi kalkulasi konsumsi bahan bakar modern yang menjadi fondasi alat kami.</p>
+          </div>
 
-          <div className="space-y-6">
-            <div className="dashboard-panel p-8 px-8 md:px-10 hover:border-slate-300 transition-colors">
-              <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3 font-outfit">
-                <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-orange-500 font-black shadow-sm">01</div>
-                Bagaimana Sistem Kalkulasi Bekerja?
+          <div className="space-y-8">
+            <div className="bg-white rounded-3xl p-8 md:p-10 shadow-sm border border-slate-200">
+              <h3 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3 font-outfit border-b border-slate-100 pb-4">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-400 to-red-500 text-white flex items-center justify-center font-black shadow-md">01</div>
+                Metodologi Rasio KML & Algoritma Routing
               </h3>
-              <p className="leading-relaxed text-slate-600 ml-14 text-sm md:text-base">BahanBakar.id memadukan teknologi instrumen Geocoding OpenStreetMap dan Routing Engine OSRM untuk memetakan jarak tempuh aktual. Sistem tidak menggunakan garis lurus, melainkan mengikuti lekukan jalan darat dan jalan tol empiris sinkron dengan perhitungan GPS modern.</p>
+              <div className="text-slate-700 space-y-4 leading-relaxed">
+                <p>
+                  Sistem Kalkulator <strong>BahanBakar.id</strong> bukanlah alat perkalian jarak lurus konvensional. Kami merangkai *Routing Engine* modern yang menarik garis geometris aktual menyusuri aspal jalan raya, gang, dan jalan tol berdasarkan topologi peta bumi (*OpenStreetMap* dan teknologi navigasi mutakhir). Proses ini memastikan jarak tempuh yang ditakar bukanlah garis imajiner burung (<em>As The Crow Flies</em>), melainkan jarak setir nyata yang akan dilibas oleh roda kendaraan Anda.
+                </p>
+                <p>
+                  Akurasi jarak tersebut kemudian disilangkan dengan variabel krusial kedua: <strong>KML (Kilometer per Liter)</strong>. Parameter efisiensi KML yang tertanam pada pusat basis data (database) otomotif kami diambil dari angka rata-rata uji jalan kombinasi (<em>Combined Cycle</em>) yang dirilis oleh pabrikan perakitan resmi maupun jurnal uji coba laboratorium otonom. Angka KML ini mencerminkan sanggupnya satu liter bahan bakar (BBM) mendorong massa sasis kendaraan di atas lintasan beton dan aspal pada kondisi *idle* maupun pacu stabil. Inilah jembatan utama untuk memproyeksikan kubikasi bensin yang bakal terbakar dalam blok mesin.
+                </p>
+              </div>
             </div>
 
-            <div className="dashboard-panel p-8 px-8 md:px-10 hover:border-slate-300 transition-colors">
-              <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3 font-outfit">
-                <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-orange-500 font-black shadow-sm">02</div>
-                Mengapa Terdapat Deviasi BBM di Lapangan?
+            <div className="bg-white rounded-3xl p-8 md:p-10 shadow-sm border border-slate-200">
+              <h3 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3 font-outfit border-b border-slate-100 pb-4">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-500 text-white flex items-center justify-center font-black shadow-md">02</div>
+                Mengapa Hasil Kalkulasi Terdapat Deviasi di Lapangan?
               </h3>
-              <p className="leading-relaxed text-slate-600 ml-14 text-sm md:text-base">Parameter KML (Kilometer per Liter) yang tertanam pada database kami mengambil rerata uji coba kombinasi wajar. Beban bagasi berlebih, kemacetan rute stop-and-go agresif, hingga deviasi takik tekanan angin ban Anda dapat mereduksi tingkat efisiensi bakar secara drastis.</p>
+              <div className="text-slate-700 space-y-4 leading-relaxed">
+                <p>
+                  Sebagai kalkulator logis mekanikal, BahanBakar.id membaca kondisi rute sebagai variabel konstan. Namun, hukum mekanika di dunia nyata mengenal ribuan anomali gesekan. Sangat lazim ketika pengguna menemukan bahwa prakiraan meteran bensin (<em>Fuel Gauge</em>) kendaraan menyimput *deviasi margin* (biasanya berkisar 5% hingga 15%) dari keluaran takaran algoritma kami. Berikut adalah penyabot utama yang "mencuri" efisiensi mesin Anda secara diam-diam:
+                </p>
+                <ul className="list-disc pl-6 space-y-3 font-medium text-slate-600 mt-4 mb-4">
+                  <li><strong>Resistansi Aerodinamis & Beban Ekstra:</strong> Membawa muatan empat orang penumpang dan kargo bagasi atap (<em>Roof Box</em>) menambah tonase kendaraan, memaksa injektor bahan bakar menyemburkan bensin lebih pekat untuk merampas Hukum Inersia.</li>
+                  <li><strong>Sindrom Rute Stop-and-Go:</strong> Kemacetan ibukota adalah neraka termodinamika bagi mesin bakar. Pergerakan mengerem dan berakselerasi dari titik nol secara repetitif membakar BBM sia-sia tanpa menempuh jarak sentimeter pun (<em>Idling loss</em>).</li>
+                  <li><strong>Tekanan Angin Ban Kempis:</strong> Resistansi gulir roda yang loyo menuntut torsi yang lebih berat, sehingga ECU mesin mendikte hisapan liter BBM yang lebih beringas tiap putaran kruk as.</li>
+                  <li><strong>Kedisiplinan Operasi Kompresor AC:</strong> Beban kompresor pendingin kabin (AC) yang diforsir untuk melawan radiasi matahari paruh waktu merampas hingga 7% energi kinetik laju roda lori Anda.</li>
+                </ul>
+              </div>
             </div>
 
-            <div className="dashboard-panel p-8 px-8 md:px-10 hover:border-slate-300 transition-colors">
-              <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3 font-outfit">
-                <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-orange-500 font-black shadow-sm">03</div>
-                Taktik Optimasi Pembakaran (Eco-Driving)
+            <div className="bg-white rounded-3xl p-8 md:p-10 shadow-sm border border-slate-200">
+              <h3 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3 font-outfit border-b border-slate-100 pb-4">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 text-white flex items-center justify-center font-black shadow-md">03</div>
+                Seni Eco-Driving: Maksimalkan Jarak, Minimalkan Biaya
               </h3>
-              <p className="leading-relaxed text-slate-600 ml-14 text-sm md:text-base">Pertahankan RPM (Revolutions Per Minute) stabil dan hindari injakan pedal gas (akselerasi) secara tiba-tiba. Di jalan bebas hambatan, melaju konstan pada kecepatan jelajah 80-90 km/jam meminimalisasi coefisien hambat aerodinamika body kendaraan Anda secara maksimal.</p>
+              <div className="text-slate-700 space-y-4 leading-relaxed">
+                <p>
+                  Melalui observasi jurnal otomotif bertahun-tahun, metode paling revolusioner menghemat ongkos pengisian SPBU bukanlah bermigrasi ke kendaraan listrik (*EV*) seketika, namun dengan mengadaptasi tabiat mengemudi <strong>Eco-Driving</strong>.
+                </p>
+                <p>
+                  Teknik fundamental mencakup pemanfaatan momentum inersia sasis. Angkat kaki Anda dari pedal gas puluhan meter sebelum menyentuh portal lampu lalu lintas; biarkan kinetik massa roda me-*rolling* mobil Anda tanpa satu tetes bensin pun terhisap melalui katup injeksi (berkat *deceleration fuel cut-off* di sistem injeksi sekunder). Selanjutnya, lestarikan RPM mesin (putaran) Anda secara harmonis di zona _Green Band_, yakni antara 1.500 jingga 2.500 RPM.
+                </p>
+                <p>
+                  Pastikan filter udara blok mesin selalu diganti sesuai jadwal (*Tune-up* teratur). Sumbatan debu di manifold udara akan mencekik suplai rasio Oksigen yang menyelewengkan stoikiometri ideal pembakaran AFR (<em>Air to Fuel Ratio</em>), yang dampaknya adalah gejala memborosnya takaran bensin (<em>running rich</em>) dan asap kenalpot hitam. Mempercayai perpaduan kalkulator <em>BahanBakar.id</em> sebagai referensi awal navigasi Anda diimbangi praktek mengemudi rileks niscaya akan menyelamatkan triliunan rupiah uang bensin sepanjang masa umur kendaraan bermotor Anda.
+                </p>
+              </div>
             </div>
           </div>
         </div>
