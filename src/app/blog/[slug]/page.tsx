@@ -51,13 +51,16 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                         <span className="bg-slate-100 text-slate-600 text-xs font-bold px-3 py-1 rounded-lg uppercase tracking-wider">
                             {article.category}
                         </span>
-                        {article.tags.map((tag, i) => (
-                            <span key={i} className="flex items-center text-xs font-semibold text-orange-500 bg-orange-50 px-2 py-1 rounded-md">
-                                <Tag className="w-3 h-3 mr-1" /> {tag}
-                            </span>
-                        ))}
                     </div>
-
+                    {article.tags && article.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-2 mt-4">
+                            {article.tags.map((tag: string, index: number) => (
+                                <span key={index} className="inline-flex items-center text-xs font-bold text-orange-600 bg-orange-50 border border-orange-100 px-2 py-1 rounded-md">
+                                    <Tag className="w-3 h-3 mr-1" /> {tag}
+                                </span>
+                            ))}
+                        </div>
+                    )}
                     <h1 className="text-3xl md:text-4xl lg:text-5xl font-outfit font-black text-slate-900 leading-tight mb-6 tracking-tight">
                         {article.title}
                     </h1>
