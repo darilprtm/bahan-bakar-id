@@ -2,10 +2,12 @@
 
 import { useState, useRef, useCallback, useEffect } from "react";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useJsApiLoader } from "@react-google-maps/api";
 import { Search, MapPin, Plus, Trash2, Fuel, Car, Navigation, AlertCircle, RefreshCw, Crosshair, ArrowUpDown, ChevronDown, Activity, DollarSign, Clock } from "lucide-react";
 import vehiclesData from "@/data/vehicles.json";
 import fuelsData from "@/data/fuels.json";
+import articlesData from "@/data/articles.json";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Lazy load Leaflet Map
@@ -610,6 +612,44 @@ export default function Home() {
           </div>
 
         </div>
+      </div>
+
+      {/* RECENT ARTICLES WIDGET */}
+      <div className="mt-16 w-full mx-auto relative z-10">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h3 className="text-2xl md:text-3xl font-outfit font-black text-slate-900 tracking-tight">Kabar Otomotif <span className="text-orange-500">Terkini</span></h3>
+            <p className="text-slate-500 font-medium text-sm mt-1">Wawasan cerdas seputar efisiensi kendaraan dan gaya mengemudi.</p>
+          </div>
+          <Link href="/blog" className="hidden sm:flex items-center gap-2 text-sm font-bold text-orange-600 hover:text-orange-700 bg-orange-50 px-4 py-2 rounded-lg transition-colors border border-orange-100">
+            Lihat Semua Berita <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {articlesData.slice(0, 3).map((article: any) => (
+            <Link href={`/blog/${article.slug}`} key={article.id} className="group dashboard-panel overflow-hidden border border-slate-200 hover:border-orange-300 transition-all shadow-sm hover:shadow-xl flex flex-col h-full bg-white">
+              <div className="h-48 w-full relative overflow-hidden bg-slate-100">
+                <img src={article.imageUrl} alt={article.title} className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-in-out" />
+                <div className="absolute top-3 left-3 bg-white/90 backdrop-blur text-xs font-bold px-2 py-1 rounded-md text-orange-600 uppercase tracking-wider shadow-sm">
+                  {article.category || 'Berita'}
+                </div>
+              </div>
+              <div className="p-5 flex flex-col flex-grow">
+                <h4 className="text-lg font-bold text-slate-900 mb-2 line-clamp-2 group-hover:text-orange-600 transition-colors">{article.title}</h4>
+                <p className="text-slate-500 text-sm line-clamp-3 mb-4">{article.excerpt}</p>
+                <div className="mt-auto flex items-center justify-between text-xs font-bold text-slate-400">
+                  <span className="flex items-center gap-1.5"><Clock className="w-3 h-3" /> {article.date}</span>
+                  <span className="text-orange-500 flex items-center gap-1 group-hover:translate-x-1 transition-transform">Baca Lanjut <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3 h-3"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg></span>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        <Link href="/blog" className="mt-6 flex sm:hidden items-center justify-center gap-2 text-sm font-bold text-orange-600 bg-orange-50 px-4 py-3 rounded-xl transition-colors border border-orange-100 w-full">
+          Jelajahi Indeks Berita Utuh
+        </Link>
       </div>
 
       {/* SEO INFO SECTION */}
