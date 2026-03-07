@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="id" className="scroll-smooth">
       <body
-        className={`${inter.variable} ${outfit.variable} ${mono.variable} font-sans antialiased bg-slate-50 text-slate-700 selection:bg-orange-500 selection:text-white min-h-screen flex flex-col`}
+        className={`${inter.variable} ${outfit.variable} ${mono.variable} font-sans antialiased bg-slate-50 text-slate-700 selection:bg-orange-500 selection:text-white min-h-screen flex flex-col overflow-x-hidden`}
       >
         {/* Background Grid Pattern for Light Theme */}
         <div className="fixed inset-0 z-[-1] opacity-[0.05] pointer-events-none" style={{ backgroundImage: "linear-gradient(#000000 1px, transparent 1px), linear-gradient(90deg, #000000 1px, transparent 1px)", backgroundSize: "30px 30px" }}></div>

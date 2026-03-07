@@ -264,9 +264,9 @@ export default function Home() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative">
 
-      {/* Subtle Glow Effects for Light Theme */}
-      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-red-100 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-orange-100 rounded-full blur-[100px] pointer-events-none"></div>
+      {/* Subtle Glow Effects for Light Theme (Mobile Responsive sizing) */}
+      <div className="absolute top-1/4 left-0 md:left-1/4 w-[250px] md:w-[500px] h-[250px] md:h-[500px] bg-red-100 rounded-full blur-[80px] md:blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-1/4 right-0 md:right-1/4 w-[200px] md:w-[400px] h-[200px] md:h-[400px] bg-orange-100 rounded-full blur-[60px] md:blur-[100px] pointer-events-none"></div>
 
       <div className="text-center mb-12 relative z-10">
         <h1 className="text-4xl md:text-6xl font-outfit font-black text-slate-900 tracking-tight mb-4 drop-shadow-sm">
@@ -280,7 +280,7 @@ export default function Home() {
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 relative z-10 w-full mb-10 max-w-full">
 
         {/* LEFT PANEL : DASHBOARD CONTROLS */}
-        <div className="w-full lg:w-[45%] xl:w-1/3 flex flex-col gap-6 lg:overflow-y-auto lg:pr-2 lg:pb-4 scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-transparent">
+        <div className="w-full lg:w-[45%] xl:w-1/3 flex flex-col gap-5 lg:gap-6 lg:overflow-y-auto lg:pr-2 lg:pb-4 scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-transparent">
 
           {errorMsg && (
             <div className="p-4 bg-red-50 text-red-600 rounded-2xl flex items-start gap-3 border border-red-200 shadow-sm">
@@ -290,8 +290,8 @@ export default function Home() {
           )}
 
           {/* Navigasi Control */}
-          <div className="dashboard-panel p-6">
-            <h2 className="text-sm font-black font-outfit text-slate-800 uppercase tracking-[0.2em] mb-5 flex items-center gap-2">
+          <div className="dashboard-panel p-4 sm:p-6">
+            <h2 className="text-sm font-black font-outfit text-slate-800 uppercase tracking-[0.2em] mb-4 sm:mb-5 flex items-center gap-2">
               <Crosshair className="text-orange-500 w-4 h-4" /> Radar Waypoint
             </h2>
 
@@ -313,16 +313,16 @@ export default function Home() {
                         <div className={`w-4 h-4 rounded-full border-4 shadow-sm relative z-10 ${idx === 0 ? 'border-orange-500 bg-white' : idx === waypoints.length - 1 ? 'border-red-500 bg-white' : 'border-slate-400 bg-white'}`}></div>
                         {idx < waypoints.length - 1 && <div className="absolute top-4 bottom-[-32px] w-[2px] bg-slate-200 z-0"></div>}
 
-                        {/* Swap Button moved cleanly to center of timeline */}
+                        {/* Swap Button moved cleanly to center of timeline, enlarged for touch */}
                         {idx < waypoints.length - 1 && (
                           <div className="absolute top-[calc(100%+16px)] z-30">
                             <button
                               suppressHydrationWarning
                               onClick={() => swapWaypoints(idx, idx + 1)}
-                              className="bg-white border border-slate-200 shadow-sm text-slate-500 hover:text-orange-500 hover:border-orange-500/50 p-1.5 rounded-full transition-all hover:scale-110 flex items-center justify-center bg-clip-padding"
+                              className="bg-white border border-slate-200 shadow-sm text-slate-500 hover:text-orange-500 hover:border-orange-500/50 p-2 sm:p-1.5 rounded-full transition-all hover:scale-110 flex items-center justify-center bg-clip-padding"
                               title="Tukar Posisi"
                             >
-                              <ArrowUpDown className="w-3.5 h-3.5" />
+                              <ArrowUpDown className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
                             </button>
                           </div>
                         )}
@@ -352,9 +352,9 @@ export default function Home() {
                             value={wp.query}
                             onChange={(e) => handleSearch(idx, e.target.value)}
                             placeholder={idx === 0 ? "Ketik lokasi awal..." : "Ketik destinasi..."}
-                            className={`w-full pl-11 pr-11 py-3.5 bg-slate-50 shadow-inner border rounded-xl text-sm transition-all text-slate-900 placeholder:text-slate-400 ${wp.lat && wp.lon ? 'border-orange-300 ring-1 ring-orange-100 bg-orange-50/30' : 'border-slate-200 focus:border-orange-400 focus:ring-1 focus:ring-orange-400'}`}
+                            className={`w-full pl-10 sm:pl-11 pr-10 sm:pr-11 py-3 sm:py-3.5 bg-slate-50 shadow-inner border rounded-xl text-sm transition-all text-slate-900 placeholder:text-slate-400 ${wp.lat && wp.lon ? 'border-orange-300 ring-1 ring-orange-100 bg-orange-50/30' : 'border-slate-200 focus:border-orange-400 focus:ring-1 focus:ring-orange-400'}`}
                           />
-                          <Search className={`w-4 h-4 absolute left-4 top-4 ${wp.isSearching ? 'animate-pulse text-orange-500' : 'text-slate-400'}`} />
+                          <Search className={`w-4 h-4 absolute left-3 sm:left-4 top-3.5 sm:top-4 ${wp.isSearching ? 'animate-pulse text-orange-500' : 'text-slate-400'}`} />
 
                           {waypoints.length > 2 && idx > 0 && (
                             <button onClick={() => removeWaypoint(wp.id)} className="absolute right-3 top-3 bg-slate-200 p-1 rounded-md text-slate-500 hover:bg-red-100 hover:text-red-500 transition-colors">
@@ -363,14 +363,14 @@ export default function Home() {
                           )}
                         </div>
 
-                        {/* Search Results Dropdown - Light Theme */}
+                        {/* Search Results Dropdown - Light Theme Responsive */}
                         {wp.searchResults && wp.searchResults.length > 0 && (
-                          <div className="absolute z-50 mt-2 w-full max-w-[calc(100%-16px)] bg-white border border-slate-200 shadow-xl rounded-xl max-h-60 overflow-y-auto overflow-hidden text-slate-700">
+                          <div className="absolute z-50 mt-2 w-full max-w-full bg-white border border-slate-200 shadow-xl rounded-xl max-h-60 overflow-y-auto overflow-hidden text-slate-700">
                             {wp.searchResults.map((res: any, i: number) => (
                               <div
                                 key={i}
                                 onClick={() => selectLocation(idx, res)}
-                                className="px-4 py-3 border-b border-slate-100 last:border-0 cursor-pointer text-xs md:text-sm hover:bg-slate-50 transition-colors flex items-start gap-3"
+                                className="px-3 sm:px-4 py-3 sm:py-3 border-b border-slate-100 last:border-0 cursor-pointer text-xs sm:text-sm hover:bg-slate-50 transition-colors flex items-start gap-2"
                               >
                                 <MapPin className="w-4 h-4 text-orange-500 mt-0.5 flex-shrink-0" />
                                 <span className="font-medium">{res.display_name}</span>
@@ -393,7 +393,7 @@ export default function Home() {
             </button>
           </div>
 
-          <div className="dashboard-panel p-6 flex flex-col gap-6">
+          <div className="dashboard-panel p-4 sm:p-6 flex flex-col gap-6">
             <div>
               <h2 className="text-sm font-black font-outfit text-slate-800 uppercase tracking-[0.2em] mb-3 flex items-center gap-2">
                 <Car className="text-blue-500 w-4 h-4" /> Konfigurasi Mesin
@@ -402,14 +402,14 @@ export default function Home() {
                 <select
                   value={selectedVehicle}
                   onChange={(e) => setSelectedVehicle(e.target.value)}
-                  className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-900 focus:border-blue-400 focus:ring-1 focus:ring-blue-400 appearance-none shadow-sm transition-colors"
+                  className="w-full px-3 sm:px-4 py-3 sm:py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-bold text-slate-900 focus:border-blue-400 focus:ring-1 focus:ring-blue-400 appearance-none shadow-sm transition-colors"
                 >
                   {vehiclesData.map(v => (
                     <option key={v.id} value={v.id}>{v.name} (~{v.kml} KM/L)</option>
                   ))}
                   <option value="custom">⚙️ SETUP MANUAL KML</option>
                 </select>
-                <ChevronDown className="absolute right-4 top-4 w-4 h-4 text-slate-400 pointer-events-none" />
+                <ChevronDown className="absolute right-4 top-3.5 sm:top-4 w-4 h-4 text-slate-400 pointer-events-none" />
               </div>
 
               {selectedVehicle === "custom" && (
@@ -443,13 +443,13 @@ export default function Home() {
                     const fuel = fuelsData.find(f => f.id === e.target.value);
                     if (fuel) setCustomPrice(fuel.price.toString());
                   }}
-                  className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-900 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 appearance-none shadow-sm transition-colors"
+                  className="w-full px-3 sm:px-4 py-3 sm:py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-bold text-slate-900 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 appearance-none shadow-sm transition-colors"
                 >
                   {fuelsData.map(f => (
                     <option key={f.id} value={f.id}>{f.name}</option>
                   ))}
                 </select>
-                <ChevronDown className="absolute right-4 top-4 w-4 h-4 text-slate-400 pointer-events-none" />
+                <ChevronDown className="absolute right-4 top-3.5 sm:top-4 w-4 h-4 text-slate-400 pointer-events-none" />
               </div>
 
               <div className="mt-4 flex items-center gap-3 p-4 bg-slate-50 rounded-xl border border-slate-200">
@@ -486,7 +486,7 @@ export default function Home() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.95, y: -20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
-                className="dashboard-panel p-6 lg:p-7 relative overflow-hidden ring-1 ring-orange-500/20"
+                className="dashboard-panel p-4 sm:p-6 lg:p-7 relative overflow-hidden ring-1 ring-orange-500/20"
               >
                 {/* HUD Glowing Lines */}
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-80"></div>
@@ -528,7 +528,7 @@ export default function Home() {
             )}
           </AnimatePresence>
 
-          <div className="flex-grow w-full rounded-3xl overflow-hidden dashboard-panel relative h-[450px] lg:h-full lg:min-h-0 min-h-[450px] shadow-sm border border-slate-200 bg-slate-50">
+          <div className="flex-grow w-full rounded-3xl overflow-hidden dashboard-panel relative h-[350px] sm:h-[450px] lg:h-full lg:min-h-0 min-h-[350px] shadow-sm border border-slate-200 bg-slate-50">
             {isLoaded ? (
               <MapDisplay points={waypoints} routeCoordinates={routeCoordinates} />
             ) : (
